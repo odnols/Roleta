@@ -1,0 +1,10 @@
+@keyframes destaca_borda {
+    0% { box-shadow: 0px 0px 5px yellow; }
+    50% { box-shadow: 0px 0px 10px yellow; }
+    100% { box-shadow: 0px 0px 5px yellow; }
+}
+@keyframes destaca_borda_buttons {
+    0% { box-shadow: 0px 0px 5px cyan; }
+    50% { box-shadow: 0px 0px 10px cyan; }
+    100% { box-shadow: 0px 0px 5px cyan; }
+}

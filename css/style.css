@@ -1,5 +1,6 @@
 body{
     background-color: rgb(18, 0, 27);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 #tab_infos{
     width: 50%;
@@ -86,7 +87,7 @@ input{
 .btn_naveg:hover{
     background-color: rgb(190, 190, 190);
 }
-#cores_lateral{
+#cores_lateral, #cores_lateral_direita{
     top: 0%;
     left: 0%;
     width: 180px;
@@ -95,10 +96,14 @@ input{
     background-color: rgba(255, 255, 255, .1);
     box-shadow: 0px 0px 15px rgba(255, 255, 255, .2);
 }
+#cores_lateral_direita{
+    left: 87%;
+    right: 0% !important;
+}
 .cs_preta{
     background-color: black;
 }
-.quadro_porc{
+.quadro_porc, .quadro_porc_direita{
     width: 100%;
     color: white;
     height: 110px;
@@ -117,7 +122,6 @@ input{
     margin-top: 10px;
     margin-left: 61.1px;
     position: absolute;
-    /* background-color: rgba(0, 0, 255, 0.452); */
 }
 .item_slot{
     z-index: 3;
@@ -127,7 +131,6 @@ input{
     float: left;
     height: 51px;
     box-sizing: border-box;
-    /* background-color: rgba(255, 251, 0, 0.397); */
 }
 /* .destaca_slot_0{
     width: 80px;
@@ -137,8 +140,27 @@ input{
     background-color: rgba(141, 46, 46, 0.363);
     clip-path: polygon(39% 0, 100% 0%, 100% 100%, 24% 100%, 0 48%);
 } */
-@keyframes destaca_borda {
-    0% { box-shadow: 0px 0px 5px yellow; }
-    50% { box-shadow: 0px 0px 10px yellow; }
-    100% { box-shadow: 0px 0px 5px yellow; }
+.qtd_repeticoes, .num_repeticos_tab{
+    margin-top: -40px;
+    position: absolute;
+    color: white !important;
+    font-size: 18px !important;
+    text-shadow: 1px 1px 1px black;
+}
+.num_repeticos_tab{
+    margin-top: -10px !important;
+}
+.prob_tab{
+    z-index: 3;
+    width: 78px;
+    margin: 2px;
+    float: left;
+    height: 37px;
+    margin-top: 222px;
+    margin-left: 65px;
+    box-sizing: border-box;
+}
+.value_19-36{
+    float: right;
+    margin-right: 50px;
 }
