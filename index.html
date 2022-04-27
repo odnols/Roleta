@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+    <title>Roletão do Faustão</title>
+    <link id="icone_pag" rel="shortcut icon" href="img/roulette.png">
+    
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <div id="tab_infos">
+        <input type="text" id="ultimo_jogo" placeholder="Último valor" onchange="calcula_porcentagem()">
+
+        <button class="btn_naveg" onclick="muda_num(0)"><</button>
+        <button class="btn_naveg" onclick="muda_num(1)">></button>
+
+        <br><br>
+        <div id="proximos_itens"></div>
+
+        <div id="probabilometro">
+            <span id="porcentagem">50%</span>
+            <div id="cor_provavel">Próxima cor</div>
+        </div>
+    </div>
+
+    <div id="cores_lateral">
+        <div class="quadro_porc cs_preta"><span class="porc_global"></span></div>
+        <div class="quadro_porc cs_vermelha"><span class="porc_global"></span></div>
+        <div class="quadro_porc cs_verde"><span class="porc_global"></span></div>
+    </div>
+
+    <div id="bancada_roleta">
+        <div id="completa_slots">
+            <!-- <div class="item_slot destaca_slot_0"></div> -->
+
+        </div>
+    </div>
+</body>
+
+<script>
+    let completa_slots = document.getElementById("completa_slots");
+
+    for(let i = 3; i <= 36; i++){
+        completa_slots.innerHTML += `<div class='item_slot destaca_slot_${i}'></div>`;
+        
+        i += 2;
+    }
+    for(let i = 2; i <= 35; i++){
+        completa_slots.innerHTML += `<div class='item_slot destaca_slot_${i}'></div>`;
+
+        i += 2;
+    }
+    for(let i = 1; i <= 34; i++){
+        completa_slots.innerHTML += `<div class='item_slot destaca_slot_${i}'></div>`;
+
+        i += 2;
+    }
+</script>
+
+<script src="js/index.js"></script>
+
+</html>
