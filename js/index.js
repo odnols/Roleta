@@ -80,7 +80,9 @@ function calcula_porcentagem(req_auto){
 
     document.getElementById("proximos_itens").innerHTML = "";
     let cores = [0, 0, 0];
-    
+    let par_impar = [0, 0]; // 0 - par, 1 - impar
+    let tab_lado = [0, 0]; // 1 - 18, 19 - 36
+
     for(let i = 1; i <= 36; i++){
         let slot_destaq = document.getElementsByClassName(`destaca_slot_${i}`);
 
@@ -91,15 +93,15 @@ function calcula_porcentagem(req_auto){
     for(let i = 0; i < 38; i++){
         if(casas_pretas.includes(`${i}`) && proximo_item[i] > 0){
             cores[0] += proximo_item[i]; // Preto
-            document.getElementById("proximos_itens").innerHTML += `<div class="casa_preta">${i}</div>`;
+            document.getElementById("proximos_itens").innerHTML += `<div class="casa_preta">${i} <p class='qtd_repeticoes'>${proximo_item[i]}</p></div>`;
         }else if(i !== 0 && i !== 37 && proximo_item[i] > 0){
             cores[1] += proximo_item[i]; // Vermelho
-            document.getElementById("proximos_itens").innerHTML += `<div class="casa_vermelha">${i}</div>`;
+            document.getElementById("proximos_itens").innerHTML += `<div class="casa_vermelha">${i} <p class='qtd_repeticoes'>${proximo_item[i]}</p></div>`;
         }else if(proximo_item[i] > 0){
             cores[2] += proximo_item[i]; // Verde
             let valor = i == 37 ? "00" : "0";
 
-            document.getElementById("proximos_itens").innerHTML += `<div class="casa_verde">${valor}</div>`;
+            document.getElementById("proximos_itens").innerHTML += `<div class="casa_verde">${valor} <p class='qtd_repeticoes'>${proximo_item[i]}</p></div>`;
         }
 
         if(proximo_item[i] > 0 && (i !== 0 && i !== 37)){
@@ -109,7 +111,26 @@ function calcula_porcentagem(req_auto){
                 alvo[0].style.border = "solid 3px yellow";
                 alvo[0].style.animation = "destaca_borda 1s infinite";
             }
+        
+            for(let x = 0; x < proximo_item[i]; x++){
+                if(i % 2 == 0)
+                    par_impar[0]++
+                else
+                    par_impar[1]++;
+
+                if(i <= 18) // Registra o slot mais frequente
+                    tab_lado[0]++;
+                else
+                    tab_lado[1]++;
+            }
         }
+    }
+
+    verifica_tabuleiro(tab_lado);
+
+    let qtd_par_impar = document.getElementsByClassName("qtd_par_impar");
+    for(let i = 0; i < qtd_par_impar.length; i++){
+        qtd_par_impar[i].innerHTML = par_impar[i]; 
     }
 
     const cor_provavel = document.getElementById("cor_provavel");
@@ -169,3 +190,24 @@ function muda_num(caso){
 }
 
 calcula_porcentagem(true);
+
+function verifica_tabuleiro(tab_lado){
+
+    let prob_tab = document.getElementsByClassName("prob_tab");
+    let repeticoes_tab = document.getElementsByClassName("num_repeticos_tab");
+    
+    for(let i = 0; i < prob_tab.length; i++){
+        prob_tab[i].style.border = "0px";
+        prob_tab[i].style.animation = "None";
+
+        repeticoes_tab[i].innerHTML = tab_lado[i];
+    }
+
+    if(tab_lado[0] > tab_lado[1] + 2){
+        prob_tab[0].style.border = "solid 3px cyan";
+        prob_tab[0].style.animation = "destaca_borda_buttons 1s infinite";
+    }else if(tab_lado[1] > tab_lado[0] + 2){
+        prob_tab[1].style.border = "solid 3px cyan";
+        prob_tab[1].style.animation = "destaca_borda_buttons 1s infinite";
+    }
+}

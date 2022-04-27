@@ -7,12 +7,12 @@
     <title>Roletão do Faustão</title>
     <link id="icone_pag" rel="shortcut icon" href="img/roulette.png">
     
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/animations.css">
 </head>
 <body>
-
     <div id="tab_infos">
-        <input type="text" id="ultimo_jogo" placeholder="Último valor" onchange="calcula_porcentagem()">
+        <input type="text" id="ultimo_jogo" placeholder="Valor" onchange="calcula_porcentagem()">
 
         <button class="btn_naveg" onclick="muda_num(0)"><</button>
         <button class="btn_naveg" onclick="muda_num(1)">></button>
@@ -32,11 +32,16 @@
         <div class="quadro_porc cs_verde"><span class="porc_global"></span></div>
     </div>
 
-    <div id="bancada_roleta">
-        <div id="completa_slots">
-            <!-- <div class="item_slot destaca_slot_0"></div> -->
+    <div id="cores_lateral_direita">
+        <div class="quadro_porc_direita cs_preta">Pares<br><span class="qtd_par_impar"></span></div>
+        <div class="quadro_porc_direita cs_vermelha">Impares<br><span class="qtd_par_impar"></span></div>
+    </div>
 
-        </div>
+    <div id="bancada_roleta">
+        <div id="completa_slots"></div>
+
+        <div class="prob_tab value_1-18"><p class="num_repeticos_tab"></p></div>
+        <div class="prob_tab value_19-36"><p class="num_repeticos_tab"></p></div>
     </div>
 </body>
 
