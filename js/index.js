@@ -17,7 +17,7 @@ const historico_jogadas = [
     ['34', '2', '00', '0'],
     ['29', '17', '31', '8', '4', '31', '26', '31', '4', '12', '35', '36', '21', '21', '30', '30', '7', '12', '32', '30', '8', '16', '29', '11', '23', '22', '6', '6', '28'],
     ['7', '8', '8', '15', '16', '6', '14', '6', '30', '4', '29', '15', '33', '1', '29', '00', '32', '4', '8', '00', '35', '23', '16', '23', '17', '25', '35', '0', '33', '12'],
-    [],
+    ['31', '8', '20', '15', '28', '26', '34', '6', '0', '32', '30', '29', '26', '6', '4', '3', '2', '7', '13', '00', '13', '11', '32', '29', '9', '0', '4', '9', '36', '22'],
     [],
     [],
     []
@@ -67,6 +67,8 @@ function calcula_porcentagem(req_auto){
 
                 total_partidas++;
             }
+
+            document.getElementById("qtd_jogos").innerHTML = total_partidas;
         }else
             break;
     }
@@ -195,7 +197,7 @@ function verifica_tabuleiro(tab_lado){
 
     let prob_tab = document.getElementsByClassName("prob_tab");
     let repeticoes_tab = document.getElementsByClassName("num_repeticos_tab");
-    
+
     for(let i = 0; i < prob_tab.length; i++){
         prob_tab[i].style.border = "0px";
         prob_tab[i].style.animation = "None";
