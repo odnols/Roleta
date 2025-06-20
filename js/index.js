@@ -18,49 +18,49 @@ const historico_jogadas = [
     ['29', '17', '31', '8', '4', '31', '26', '31', '4', '12', '35', '36', '21', '21', '30', '30', '7', '12', '32', '30', '8', '16', '29', '11', '23', '22', '6', '6', '28'],
     ['7', '8', '8', '15', '16', '6', '14', '6', '30', '4', '29', '15', '33', '1', '29', '00', '32', '4', '8', '00', '35', '23', '16', '23', '17', '25', '35', '0', '33', '12'],
     ['31', '8', '20', '15', '28', '26', '34', '6', '0', '32', '30', '29', '26', '6', '4', '3', '2', '7', '13', '00', '13', '11', '32', '29', '9', '0', '4', '9', '36', '22'],
-    [],
+    ['16', '22', '34', '26', '30', '8', '16', '9', '2', '0', '32', '19', '13', '36', '33', '0', '36', '15', '18', '28', '29', '4', '30', '35', '3', '35', '6', '2', '6', '1'],
     [],
     []
 ];
 
-function calcula_porcentagem(req_auto){
+function calcula_porcentagem(req_auto) {
 
     let repeticoes = [];
     let proximo_item = [];
 
-    for(let i = 0; i < 38; i++){
+    for (let i = 0; i < 38; i++) {
         repeticoes.push(0);
         proximo_item.push(0);
     }
 
     const ult_valor = document.getElementById("ultimo_jogo");
-    if(ult_valor.value.length === 0 && !req_auto) return;
+    if (ult_valor.value.length === 0 && !req_auto) return;
 
     let total_partidas = 0;
     let total_casas_global = [0, 0, 0];
 
-    for(let i = 0; historico_jogadas.length; i++){
-        if(typeof historico_jogadas[i] !== "undefined"){
-            for(let x = 0; x < historico_jogadas[i].length; x++){
-                if(historico_jogadas[i][x] === ult_valor.value){
-                    if(ult_valor.value !== '00')
+    for (let i = 0; historico_jogadas.length; i++) {
+        if (typeof historico_jogadas[i] !== "undefined") {
+            for (let x = 0; x < historico_jogadas[i].length; x++) {
+                if (historico_jogadas[i][x] === ult_valor.value) {
+                    if (ult_valor.value !== '00')
                         repeticoes[ult_valor.value - 1] += 1
                     else
                         repeticoes[37] += 1
 
-                    if(typeof historico_jogadas[i][x + 1] !== "undefined"){
+                    if (typeof historico_jogadas[i][x + 1] !== "undefined") {
                         let prox_valor = historico_jogadas[i][x + 1];
-                        
-                        if(prox_valor !== '00')
+
+                        if (prox_valor !== '00')
                             proximo_item[prox_valor] += 1
                         else
                             proximo_item[37] += 1
                     }
                 }
 
-                if(casas_pretas.includes(historico_jogadas[i][x]))
+                if (casas_pretas.includes(historico_jogadas[i][x]))
                     total_casas_global[0]++;
-                else if(historico_jogadas[i][x] !== '0' || historico_jogadas[i][x] !== '00')
+                else if (historico_jogadas[i][x] !== '0' || historico_jogadas[i][x] !== '00')
                     total_casas_global[1]++;
                 else
                     total_casas_global[2]++;
@@ -69,58 +69,58 @@ function calcula_porcentagem(req_auto){
             }
 
             document.getElementById("qtd_jogos").innerHTML = total_partidas;
-        }else
+        } else
             break;
     }
 
     let porcentagem_global = document.getElementsByClassName("porc_global");
-    for(let i = 0; i < porcentagem_global.length; i++){
-        porcentagem_global[i].innerHTML = ((total_casas_global[i] / total_partidas) * 100).toFixed(2) +"%"; 
+    for (let i = 0; i < porcentagem_global.length; i++) {
+        porcentagem_global[i].innerHTML = ((total_casas_global[i] / total_partidas) * 100).toFixed(2) + "%";
     }
 
-    if(req_auto) return;
+    if (req_auto) return;
 
     document.getElementById("proximos_itens").innerHTML = "";
     let cores = [0, 0, 0];
     let par_impar = [0, 0]; // 0 - par, 1 - impar
     let tab_lado = [0, 0]; // 1 - 18, 19 - 36
 
-    for(let i = 1; i <= 36; i++){
+    for (let i = 1; i <= 36; i++) {
         let slot_destaq = document.getElementsByClassName(`destaca_slot_${i}`);
 
         slot_destaq[0].style.border = "0px";
         slot_destaq[0].style.animation = "None";
     }
 
-    for(let i = 0; i < 38; i++){
-        if(casas_pretas.includes(`${i}`) && proximo_item[i] > 0){
+    for (let i = 0; i < 38; i++) {
+        if (casas_pretas.includes(`${i}`) && proximo_item[i] > 0) {
             cores[0] += proximo_item[i]; // Preto
             document.getElementById("proximos_itens").innerHTML += `<div class="casa_preta">${i} <p class='qtd_repeticoes'>${proximo_item[i]}</p></div>`;
-        }else if(i !== 0 && i !== 37 && proximo_item[i] > 0){
+        } else if (i !== 0 && i !== 37 && proximo_item[i] > 0) {
             cores[1] += proximo_item[i]; // Vermelho
             document.getElementById("proximos_itens").innerHTML += `<div class="casa_vermelha">${i} <p class='qtd_repeticoes'>${proximo_item[i]}</p></div>`;
-        }else if(proximo_item[i] > 0){
+        } else if (proximo_item[i] > 0) {
             cores[2] += proximo_item[i]; // Verde
             let valor = i == 37 ? "00" : "0";
 
             document.getElementById("proximos_itens").innerHTML += `<div class="casa_verde">${valor} <p class='qtd_repeticoes'>${proximo_item[i]}</p></div>`;
         }
 
-        if(proximo_item[i] > 0 && (i !== 0 && i !== 37)){
+        if (proximo_item[i] > 0 && (i !== 0 && i !== 37)) {
             let alvo = document.getElementsByClassName(`destaca_slot_${i}`);
 
-            if(alvo[0]){
+            if (alvo[0]) {
                 alvo[0].style.border = "solid 3px yellow";
                 alvo[0].style.animation = "destaca_borda 1s infinite";
             }
-        
-            for(let x = 0; x < proximo_item[i]; x++){
-                if(i % 2 == 0)
+
+            for (let x = 0; x < proximo_item[i]; x++) {
+                if (i % 2 == 0)
                     par_impar[0]++
                 else
                     par_impar[1]++;
 
-                if(i <= 18) // Registra o slot mais frequente
+                if (i <= 18) // Registra o slot mais frequente
                     tab_lado[0]++;
                 else
                     tab_lado[1]++;
@@ -131,8 +131,8 @@ function calcula_porcentagem(req_auto){
     verifica_tabuleiro(tab_lado);
 
     let qtd_par_impar = document.getElementsByClassName("qtd_par_impar");
-    for(let i = 0; i < qtd_par_impar.length; i++){
-        qtd_par_impar[i].innerHTML = par_impar[i]; 
+    for (let i = 0; i < qtd_par_impar.length; i++) {
+        qtd_par_impar[i].innerHTML = par_impar[i];
     }
 
     const cor_provavel = document.getElementById("cor_provavel");
@@ -141,49 +141,49 @@ function calcula_porcentagem(req_auto){
 
     const somatorio = cores[0] + cores[1] + cores[2];
 
-    if(cores[0] > cores[1]){
+    if (cores[0] > cores[1]) {
         cor_provavel.style.backgroundColor = "Black";
         cor_provavel.style.color = "White";
-        porcentagem.innerHTML = ((cores[0] / somatorio) * 100).toFixed(0) +"%";
-    }else if(cores[1] > cores[0]){
+        porcentagem.innerHTML = ((cores[0] / somatorio) * 100).toFixed(0) + "%";
+    } else if (cores[1] > cores[0]) {
         cor_provavel.style.backgroundColor = "Red";
         cor_provavel.style.color = "Black";
-        porcentagem.innerHTML = ((cores[1] / somatorio) * 100).toFixed(0) +"%";
-    }else if(cores[2] > cores[1] || cores[2] > cores[0]){
+        porcentagem.innerHTML = ((cores[1] / somatorio) * 100).toFixed(0) + "%";
+    } else if (cores[2] > cores[1] || cores[2] > cores[0]) {
         cor_provavel.style.backgroundColor = "Green";
         cor_provavel.style.color = "Black";
-        porcentagem.innerHTML = ((cores[2] / somatorio) * 100).toFixed(0) +"%";
+        porcentagem.innerHTML = ((cores[2] / somatorio) * 100).toFixed(0) + "%";
     }
 
-    if(cores[0] === cores[1]){
-        porcentagem.innerHTML = ((cores[1] / somatorio) * 100).toFixed(0) +"%";
+    if (cores[0] === cores[1]) {
+        porcentagem.innerHTML = ((cores[1] / somatorio) * 100).toFixed(0) + "%";
         cor_provavel.style.background = "linear-gradient(90deg, rgba(0,0,0,0.9948354341736695) 35%, rgba(255,0,0,1) 65%)";
         cor_provavel.style.color = "White";
     }
 }
 
-function muda_num(caso){
+function muda_num(caso) {
 
     let valor = '0';
     const ult_valor = document.getElementById("ultimo_jogo");
 
-    if(ult_valor.value.length > 0)
+    if (ult_valor.value.length > 0)
         valor = parseInt(ult_valor.value);
 
-    if(ult_valor.value.length > 0)
-        if(caso){ // Somando
-            if(ult_valor.value == '00')
+    if (ult_valor.value.length > 0)
+        if (caso) { // Somando
+            if (ult_valor.value == '00')
                 valor = 0;
-            else if(valor < 36)
+            else if (valor < 36)
                 valor += 1;
-            else if(valor == 36)
+            else if (valor == 36)
                 valor = '00';
-        }else{
-            if(ult_valor.value == '00')
+        } else {
+            if (ult_valor.value == '00')
                 valor = 36;
-            else if(valor > 0)
+            else if (valor > 0)
                 valor -= 1;
-            else if(ult_valor.value == '0')
+            else if (ult_valor.value == '0')
                 valor = '00';
         }
 
@@ -193,22 +193,22 @@ function muda_num(caso){
 
 calcula_porcentagem(true);
 
-function verifica_tabuleiro(tab_lado){
+function verifica_tabuleiro(tab_lado) {
 
     let prob_tab = document.getElementsByClassName("prob_tab");
     let repeticoes_tab = document.getElementsByClassName("num_repeticos_tab");
 
-    for(let i = 0; i < prob_tab.length; i++){
+    for (let i = 0; i < prob_tab.length; i++) {
         prob_tab[i].style.border = "0px";
         prob_tab[i].style.animation = "None";
 
         repeticoes_tab[i].innerHTML = tab_lado[i];
     }
 
-    if(tab_lado[0] > tab_lado[1] + 2){
+    if (tab_lado[0] > tab_lado[1] + 2) {
         prob_tab[0].style.border = "solid 3px cyan";
         prob_tab[0].style.animation = "destaca_borda_buttons 1s infinite";
-    }else if(tab_lado[1] > tab_lado[0] + 2){
+    } else if (tab_lado[1] > tab_lado[0] + 2) {
         prob_tab[1].style.border = "solid 3px cyan";
         prob_tab[1].style.animation = "destaca_borda_buttons 1s infinite";
     }
